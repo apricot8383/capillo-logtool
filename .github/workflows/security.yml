@@ -10,7 +10,7 @@ jobs:
           python-version: '3.12'
       - run: pip install poetry ruff mypy bandit pip-audit pytest
       - run: poetry --version || true
-      - run: ruff .
+      - run: ruff check .
       - run: pytest -q || true
       - run: mypy src || true
       - run: bandit -q -r src || true
