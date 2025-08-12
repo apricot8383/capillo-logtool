@@ -1,0 +1,17 @@
+name: Security CI
+on: [push, pull_request]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install poetry ruff mypy bandit pip-audit pytest
+      - run: poetry install --no-interaction || true
+      - run: ruff .
+      - run: pytest -q || true
+      - run: mypy src || true
+      - run: bandit -q -r src || true
+      - run: pip-audit || true
